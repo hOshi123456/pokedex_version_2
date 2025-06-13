@@ -515,10 +515,12 @@ export default {
 }
 
 .loading-container p {
-  color: var(--text-secondary);
+  color: var(--text-primary);
   font-size: 1.125rem;
   font-weight: 500;
   margin: 0;
+  text-align: center;
+  line-height: 1.4;
 }
 
 .pokeball-loader {

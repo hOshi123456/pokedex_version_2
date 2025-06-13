@@ -382,7 +382,7 @@ export default {
   --success-color: #10b981;
   --warning-color: #f59e0b;
   --danger-color: #ef4444;
-  --dark-color: #374151;
+  --dark-color: #1f2937;
   --light-color: #f8fafc;
   --border-radius: 12px;
   --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
@@ -390,21 +390,20 @@ export default {
   --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Dark theme variables */
 .dark-theme {
   --primary-color: #60a5fa;
   --secondary-color: #3b82f6;
   --success-color: #34d399;
   --warning-color: #fbbf24;
   --danger-color: #f87171;
-  --dark-color: #f9fafb;
+  --dark-color: #f3f4f6;
   --light-color: #1f2937;
-  --bg-primary: #111827;
-  --bg-secondary: #1f2937;
+  --bg-primary: #0f172a;
+  --bg-secondary: #1e293b;
   --bg-tertiary: #374151;
   --text-primary: #f9fafb;
-  --text-secondary: #d1d5db;
-  --border-color: #374151;
+  --text-secondary: #9ca3af;
+  --border-color: #4b5563;
 }
 
 #app {
@@ -1031,16 +1030,25 @@ main {
   }
 }
 
-@media (max-width: 480px) {
+@media (max-width: 375px) {
   .app-title {
-    font-size: 1.5rem;
+    font-size: 1.2rem;
   }
-  
+
+   
+  .stat-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 1.2rem;
+  }
+
   .header-controls {
     flex-direction: column;
-    align-items: center;
+    align-items: 0.4rem;
   }
-  
+  .stat-content h3 {
+    font-size: 0.9rem;
+  }
   .theme-toggle,
   .stats-toggle,
   .export-btn {
@@ -1065,6 +1073,9 @@ main {
   
   .mini-type-bar {
     justify-content: space-between;
+  }
+  .type-name {
+    font-size: 0.75rem;
   }
 }
 

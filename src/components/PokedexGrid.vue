@@ -123,19 +123,22 @@
             </div>
         </div>
 
-        <!-- Grid -->
+
         <ag-grid-vue v-if="!loading" ref="agGrid" class="ag-theme-alpine pokemon-grid"
-            :class="{ 'ag-theme-alpine-dark': isDarkMode }" :rowData="filteredPokemons" :columnDefs="columnDefs"
-            :defaultColDef="defaultColDef" :pagination="true" :paginationPageSize="pageSize" :domLayout="'autoHeight'"
-            :suppressClickEdit="true" :rowSelection="'multiple'" :suppressCellFocus="true"
-            :suppressRowHoverHighlight="false" :onCellClicked="onCellClicked" :onSelectionChanged="onSelectionChanged"
-            :onRowClicked="onRowClicked" :onRowDoubleClicked="onRowDoubleClicked"
-            :onCellDoubleClicked="onCellDoubleClicked" :onSortChanged="onSortChanged" :onFilterChanged="onFilterChanged"
-            :onPaginationChanged="onPaginationChanged" :rowHeight="80" :headerHeight="50" :animateRows="true"
-            :enableRangeSelection="true" :suppressMultiRangeSelection="false" :rowMultiSelectWithClick="true"
-            :suppressRowDeselection="false" :enableCellTextSelection="true" :suppressMenuHide="false"
-            :allowContextMenuWithControlKey="true" :getContextMenuItems="getContextMenuItems"
-            :statusBar="statusBarConfig" :sideBar="sidebarConfig"></ag-grid-vue>
+            :class="['pokemon-grid', { 'ag-theme-alpine-dark': isDarkMode, 'dark-mode': isDarkMode, 'full-dark-grid': isDarkMode }]"
+            :rowData="filteredPokemons" :columnDefs="columnDefs" :defaultColDef="defaultColDef" :pagination="true"
+            :paginationPageSize="pageSize" :domLayout="'autoHeight'" :suppressClickEdit="true"
+            :rowSelection="'multiple'" :suppressCellFocus="true" :suppressRowHoverHighlight="false"
+            :onCellClicked="onCellClicked" :onSelectionChanged="onSelectionChanged" :onRowClicked="onRowClicked"
+            :onRowDoubleClicked="onRowDoubleClicked" :onCellDoubleClicked="onCellDoubleClicked"
+            :onSortChanged="onSortChanged" :onFilterChanged="onFilterChanged" :onPaginationChanged="onPaginationChanged"
+            :rowHeight="80" :headerHeight="50" :animateRows="true" :enableRangeSelection="true"
+            :suppressMultiRangeSelection="false" :rowMultiSelectWithClick="true" :suppressRowDeselection="false"
+            :enableCellTextSelection="true" :suppressMenuHide="false" :allowContextMenuWithControlKey="true"
+            :getContextMenuItems="getContextMenuItems" :statusBar="statusBarConfig" :sideBar="sidebarConfig"
+            :initialSortModel="[{ colId: 'name', sort: 'asc' }]">
+        </ag-grid-vue>
+
     </div>
 </template>
 
@@ -700,10 +703,14 @@ export default {
             });
         },
 
-        onSortChanged(event) {
-            const sortModel = event.api.getSortModel();
-            this.$emit('sort-changed', sortModel);
+        onSortChanged() {
+            const api = this.$refs.agGrid?.api;
+            if (api && typeof api.getSortModel === 'function') {
+                const sortModel = api.getSortModel();
+                this.$emit('sort-changed', sortModel);
+            }
         },
+
 
         onFilterChanged(event) {
             const filterModel = event.api.getFilterModel();
@@ -1446,14 +1453,20 @@ export default {
 }
 
 /* Responsive */
-@media (max-width: 1200px) {
+@media (max-width: 480px) {
     .controls-bar {
         flex-direction: column;
         align-items: stretch;
     }
 
     .search-container {
-        max-width: none;
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+
+    .search-input {
+        width: 100% !important;
+        box-sizing: border-box;
     }
 
     .view-controls {
@@ -1508,22 +1521,68 @@ export default {
     }
 }
 
-@media (max-width: 480px) {
-    .filter-buttons {
+@media (max-width: 768px) {
+    .controls-bar {
         flex-direction: column;
+        align-items: stretch;
     }
 
-    .filter-btn {
-        text-align: center;
+    .filter-buttons,
+    .view-controls {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
     }
 
-    .type-filter-badges {
-        justify-content: center;
+    .filter-btn,
+    .page-size-select {
+        width: 100%;
     }
 
     .stats {
         flex-direction: column;
-        gap: 0.5rem;
+        align-items: center;
     }
+
+    .search-container {
+        width: 100%;
+        max-width: none;
+    }
+
+    .pokemon-grid.dark-mode {
+        background-color: var(--bg-primary);
+        color: var(--text-primary);
+    }
+}
+
+:deep(.ag-theme-alpine-dark) {
+    background-color: #0f172a !important;
+    --ag-background-color: #0f172a;
+    --ag-foreground-color: #f8fafc;
+    --ag-header-background-color: #1e293b;
+    --ag-header-foreground-color: #f8fafc;
+    --ag-data-color: #f8fafc;
+    --ag-border-color: #334155;
+    --ag-row-hover-color: #1e293b;
+    --ag-selected-row-background-color: rgba(59, 130, 246, 0.2);
+    --ag-font-size: 13px;
+    --ag-font-family: 'Segoe UI', sans-serif;
+}
+
+:deep(.ag-theme-alpine-dark .ag-header-cell-label) {
+    color: #f8fafc !important;
+}
+
+:deep(.ag-theme-alpine-dark .ag-cell) {
+    color: #f8fafc !important;
+    background-color: transparent !important;
+}
+
+:deep(.full-dark-grid .ag-row) {
+    background-color: #0f172a !important;
+}
+
+:deep(.full-dark-grid .ag-row:hover) {
+    background-color: #1e293b !important;
 }
 </style>

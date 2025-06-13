@@ -826,29 +826,65 @@ export default {
   }
 }
 
-@media (max-width: 480px) {
-  .modal-header {
+@media (max-width: 375px) {
+  .modal-content {
+    max-width: 95vw;
     padding: 1rem;
   }
-  
-  .modal-body {
-    padding: 0.75rem;
+
+  .modal-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 0.5rem;
+    padding: 1rem;
   }
-  
+
+  .modal-title {
+    font-size: 1.25rem;
+  }
+
+  .pokemon-image-container {
+    width: 90px;
+    height: 90px;
+  }
+
+  .modal-img {
+    width: 70px;
+    height: 70px;
+  }
+
+  .catch-btn {
+    padding: 0.5rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  .pokemon-description {
+    font-size: 0.9rem;
+  }
+
+  .evolution-img-mini {
+    width: 35px;
+    height: 35px;
+  }
+
+  .evolution-name-mini {
+    font-size: 0.7rem;
+  }
+
+  .info-row {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
   .stats-grid-compact {
     grid-template-columns: 1fr;
   }
-  
-  .pokemon-image-container {
-    width: 100px;
-    height: 100px;
-  }
-  
-  .modal-img {
-    width: 80px;
-    height: 80px;
+
+  .section-title {
+    font-size: 1rem;
   }
 }
+
 
 /* ============ SCROLLBAR CUSTOMIZATION ============ */
 .modal-content::-webkit-scrollbar {
