@@ -8,9 +8,6 @@
         <button @click="showStats = !showStats" class="stats-toggle" :class="{ active: showStats }">
           📊 Dashboard
         </button>
-        <button @click="exportToCSV" class="export-btn" :disabled="!canExport">
-          📁 Exportar CSV
-        </button>
       </div>
       
       <h1 class="app-title">
@@ -18,17 +15,6 @@
         Pokédex
       </h1>
       <p class="app-subtitle">Explora y descubre todos los Pokémon</p>
-      
-      <div class="search-container">
-        <input
-          type="text"
-          v-model="searchQuery"
-          @input="onSearchChange"
-          placeholder="Buscar Pokémon por nombre o tipo..."
-          class="search-input"
-        />
-        <div class="search-icon">🔍</div>
-      </div>
       
       <div class="pokemon-counter" v-if="totalPokemons > 0">
         {{ filteredCount }} de {{ totalPokemons }} Pokémon encontrados
