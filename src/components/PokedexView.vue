@@ -129,15 +129,7 @@ export default {
       }
     },
 
-    // ============ FILTERING ============
-    onFilterTextChanged() {
-      const query = this.searchQuery.toLowerCase();
-      this.filteredPokemons = this.pokemons.filter((pokemon) =>
-        pokemon.name.toLowerCase().includes(query) ||
-        pokemon.types.some(type => type.toLowerCase().includes(query))
-      );
-      this.emitStats();
-    },
+
 
     // ============ MODAL MANAGEMENT ============
     async showPokemonDetails(pokemon) {
@@ -413,33 +405,7 @@ export default {
     },
 
     // ============ STATS & EXPORT ============
-    exportToCSV() {
-      const headers = ['ID', 'Nombre', 'Tipos', 'Región', 'Altura (m)', 'Peso (kg)', 'Atrapado'];
-      const csvData = [headers];
-      
-      this.filteredPokemons.forEach(pokemon => {
-        csvData.push([
-          pokemon.id,
-          pokemon.name,
-          pokemon.types.join(', '),
-          pokemon.generation,
-          (pokemon.height / 10).toFixed(1),
-          (pokemon.weight / 10).toFixed(1),
-          this.isCaught(pokemon.id) ? 'Sí' : 'No'
-        ]);
-      });
-      
-      const csvString = csvData.map(row => row.join(',')).join('\n');
-      const blob = new Blob([csvString], { type: 'text/csv;charset=utf-8;' });
-      const link = document.createElement('a');
-      const url = URL.createObjectURL(blob);
-      link.setAttribute('href', url);
-      link.setAttribute('download', `pokedex_filtrado_${new Date().toISOString().split('T')[0]}.csv`);
-      link.style.visibility = 'hidden';
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    },
+    
 
     emitStats() {
       const stats = {
